@@ -2,13 +2,25 @@
 	<q-card
 		class="card">
     <q-img
-      :src="food.imageUrl"
+      :src="food.imageUrl || 'statics/image-placeholder.png'"
+      placeholder-src="statics/image-placeholder.png"
       basic
       contain
+      absolute-full
     >
+      <template #loading>
+        <div class="absolute-full flex flex-center text-subtitle1 text-white">
+          Loading...
+        </div>
+      </template>
       <div class="absolute-bottom text-h6">
         {{ food.name }}
       </div>
+      <template #error>
+        <div class="absolute-full flex flex-center bg-negative text-white">
+          Cannot load image
+        </div>
+      </template>
     </q-img>
 
 		<q-card-section>
@@ -21,8 +33,11 @@
       />
     </q-card-section>
 
-    <q-card-section>
-      {{ food.description }}
+    <q-card-section >
+      <template v-if="food.description && food.description.length">
+        {{ food.description }}
+      </template>
+      <i v-else>No description provided.</i>
     </q-card-section>
 
     <q-card-actions
@@ -42,7 +57,11 @@
 
     <q-dialog
     	v-model="showEditFoodModal">
-      <modal-add-edit-food type="edit" />
+      <modal-add-edit-food
+        mode="edit"
+        :food="food"
+        @close="showEditFoodModal = false"
+      />
     </q-dialog>
 
     <q-dialog

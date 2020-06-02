@@ -24,8 +24,12 @@
 	    	@click="showAddFoodModal = true" />
 
 	    <q-dialog
-	    	v-model="showAddFoodModal">
-        <modal-add-edit-food type="add" />
+	    	v-model="showAddFoodModal"
+      >
+        <modal-add-edit-food
+          mode="add"
+          @close="showAddFoodModal = false"
+        />
       </q-dialog>
 
   	</div>
@@ -44,9 +48,6 @@
       ...mapGetters('foods', [
         'foods'
       ]),
-	    // ...mapActions('foods', [
-	    //   ''
-      // ])
     },
 	  components: {
 	  	'food' : require('components/Food.vue').default,
