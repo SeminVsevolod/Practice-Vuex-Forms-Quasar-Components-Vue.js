@@ -15,7 +15,7 @@
   <q-page class="q-pa-lg">
   	<div class="row q-gutter-lg">
 
-			<food 
+			<food
 				v-for="food in foods"
 				:key="food.id"
 				:food="food" />
@@ -23,45 +23,31 @@
 	    <button-add
 	    	@click="showAddFoodModal = true" />
 
-	    <q-dialog 
+	    <q-dialog
 	    	v-model="showAddFoodModal">
         <modal-add-edit-food type="add" />
       </q-dialog>
-    
+
   	</div>
   </q-page>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
 	export default {
 	  data() {
 	  	return {
-	  		foods: [
-	  			{
-	  				id: 1,
-	  				name: 'Burger',
-	  				description: 'A burger is a sandwich consisting of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun.',
-	  				imageUrl: 'https://i.imgur.com/0umadnY.jpg',
-	  				rating: 4
-	  			},
-	  			{
-	  				id: 2,
-	  				name: 'Pizza',
-	  				description: 'Pizza is a savory dish of Italian origin, consisting of a usually round, flattened base of leavened wheat-based dough.',
-	  				imageUrl: 'https://i.imgur.com/b9zDbyb.jpg',
-	  				rating: 5
-	  			},
-	  			{
-	  				id: 3,
-	  				name: 'Sprouts',
-	  				description: 'The Brussels sprout is a member of the Gemmifera Group of cabbages, grown for its edible buds.',
-	  				imageUrl: 'https://i.imgur.com/RbKjUjB.jpg',
-	  				rating: 1
-	  			}
-	  		],
 	  		showAddFoodModal: false
 	  	}
 	  },
+    computed: {
+      ...mapGetters('foods', [
+        'foods'
+      ]),
+	    // ...mapActions('foods', [
+	    //   ''
+      // ])
+    },
 	  components: {
 	  	'food' : require('components/Food.vue').default,
 	  	'button-add' : require('components/ButtonAdd.vue').default,
