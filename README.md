@@ -4,7 +4,7 @@
 
 ~~2) Create a getter to retreive the food and display these on the page using the getter~~
 
-3) Add the ability to delete an item (when the user clicks Delete) using actions & mutations - show a confirm dialog before deleting
+~~3) Add the ability to delete an item (when the user clicks Delete) using actions & mutations - show a confirm dialog before deleting~~
 
 4) Add validation to the Add / Edit Food modal - make the Name a required field with a max of 20 characters. Make description not required, but with a max of 135 characters. Validation should be triggered when Save is clicked
 

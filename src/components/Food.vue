@@ -1,5 +1,5 @@
 <template>
-	<q-card 
+	<q-card
 		class="card">
     <q-img
       :src="food.imageUrl"
@@ -36,27 +36,66 @@
       <q-btn
       	icon="delete"
       	color="red"
+        @click.stop="showConfirmToDelete = true"
       	flat>Delete</q-btn>
     </q-card-actions>
 
-    <q-dialog 
+    <q-dialog
     	v-model="showEditFoodModal">
       <modal-add-edit-food type="edit" />
+    </q-dialog>
+
+    <q-dialog
+      v-model="showConfirmToDelete"
+      persistent
+    >
+      <q-card style="width: 300px">
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Really delete?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            v-close-popup
+            flat
+            label="Cancel"
+            color="primary"
+          />
+          <q-btn
+            v-close-popup
+            flat
+            label="Delete"
+            color="red"
+            @click="deleteFood({id: food.id})"
+          />
+        </q-card-actions>
+      </q-card>
     </q-dialog>
   </q-card>
 </template>
 
 <script>
+  import {mapActions} from 'vuex';
 	export default {
+    components: {
+      'modal-add-edit-food' : require('components/ModalAddEditFood.vue').default
+    },
+
 		props: ['food'],
+
 		data() {
 			return {
-				showEditFoodModal: false
+				showEditFoodModal: false,
+        showConfirmToDelete: false,
 			}
 		},
-		components: {
-			'modal-add-edit-food' : require('components/ModalAddEditFood.vue').default
-		}
+
+    methods: {
+      ...mapActions('foods', [
+        'updateFood',
+        'deleteFood',
+      ]),
+    },
 	}
 </script>
 

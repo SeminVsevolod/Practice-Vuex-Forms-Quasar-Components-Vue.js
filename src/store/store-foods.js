@@ -28,14 +28,33 @@ const state = {
 };
 
 const mutations = {
-  updateFood(State, payload) {
-    Object.assign(State.foods[payload.id], payload.updates);
+  /**
+   * Update food object
+   * @param state
+   * @param id - unique id of food object needed to update
+   * @param updates - new food object
+   */
+  updateFood(state, {id, updates}) {
+    const foodForUpdateIndex = state.foods.findIndex(food => food.id === id);
+    Vue.set(state.foods, foodForUpdateIndex, updates);
   },
-  deleteFood(State, payload) {
-    Vue.delete(State.foods, payload.id);
+
+  /**
+   * Delete food object
+   * @param state
+   * @param payload
+   */
+  deleteFood(state, payload) {
+    state.foods = state.foods.filter(food => food.id !== payload.id);
   },
-  addFood(State, payload) {
-    Vue.set(State.foods, payload.id, payload.food);
+
+  /**
+   * Add new food object
+   * @param state
+   * @param food
+   */
+  addFood(state, {food}) {
+    Vue.set(state.foods, state.foods.length, food);
   },
 };
 
@@ -43,9 +62,11 @@ const actions = {
   updateFood({ commit }, payload) {
     commit('updateFood', payload);
   },
+
   deleteFood({ commit }, payload) {
     commit('deleteFood', payload);
   },
+
   addFood({ commit }, food) {
     const foodId = uid();
     const payload = {
@@ -57,7 +78,7 @@ const actions = {
 };
 
 const getters = {
-  foods: (State) => State.foods,
+  foods: (state) => state.foods,
 };
 
 export default {
